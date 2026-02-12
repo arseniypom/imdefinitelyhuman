@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { useQuiz } from '@/lib/quiz-context';
 import { t } from '@/lib/i18n';
+import { scoreStep } from '@/lib/scoring';
 
 export function StepCaptcha() {
   const { state, dispatch } = useQuiz();
@@ -22,13 +23,13 @@ export function StepCaptcha() {
 
     // Auto-advance after "verification"
     setTimeout(() => {
-      dispatch({ type: 'ANSWER_STEP', answer: { stepIndex: 7, value: 'checkbox', score: 8 } });
+      dispatch({ type: 'ANSWER_STEP', answer: { stepIndex: 7, value: 'checkbox', score: scoreStep(7, 'checkbox') } });
       dispatch({ type: 'NEXT_STEP' });
     }, 1200);
   };
 
   const handleNotSure = () => {
-    dispatch({ type: 'ANSWER_STEP', answer: { stepIndex: 7, value: 'not_sure', score: 2 } });
+    dispatch({ type: 'ANSWER_STEP', answer: { stepIndex: 7, value: 'not_sure', score: scoreStep(7, 'not_sure') } });
     dispatch({ type: 'NEXT_STEP' });
   };
 

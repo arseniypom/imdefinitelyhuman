@@ -19,7 +19,7 @@ export function scoreStep(stepIndex: number, value: string | number): number {
     case 6:
       return score3AM(value as string);
     case 7:
-      return value === 'checkbox' ? 8 : 2;
+      return value === 'checkbox' ? 10 : 2;
     case 8:
       return scoreTemperature(value as number);
     case 9:
@@ -83,8 +83,8 @@ function scoreTemperature(value: number): number {
 
 function scoreFinal(value: string): number {
   const map: Record<string, number> = {
-    no: 5,
-    yes: 5,
+    no: 10,
+    yes: 10,
     complicated: 0,
   };
   return map[value] ?? 0;
