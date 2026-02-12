@@ -28,6 +28,13 @@ const dmSans = DM_Sans({
 export const metadata: Metadata = {
   title: "Are You Human?",
   description: "A fun quiz that determines how human you are (vs AI) — expressed as a percentage.",
+  icons: {
+    icon: [
+      { url: "/favicon-32x32.png", sizes: "32x32", type: "image/png" },
+      { url: "/favicon-16x16.png", sizes: "16x16", type: "image/png" },
+    ],
+  },
+  manifest: "/site.webmanifest",
   openGraph: {
     title: "Are You Human?",
     description: "Take this quiz to find out if you're a real human or just GPT-4 in a trenchcoat.",
