@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import posthog from 'posthog-js'
 import { useQuiz } from '@/lib/quiz-context';
 import { t } from '@/lib/i18n';
 
@@ -12,6 +13,7 @@ export function StepName() {
   const submit = () => {
     const name = value.trim();
     if (!name) return;
+    posthog.capture('name_entered', { name });
     dispatch({ type: 'SET_NAME', name });
     dispatch({ type: 'ANSWER_STEP', answer: { stepIndex: 0, value: name, score: 0 } });
     dispatch({ type: 'NEXT_STEP' });
