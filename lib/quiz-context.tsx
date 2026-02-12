@@ -17,7 +17,7 @@ const THEME_KEY = 'imdefhuman_theme';
 
 const initialState: QuizState = {
   lang: 'en',
-  theme: 'terminal',
+  theme: 'light',
   currentStep: 0,
   name: '',
   answers: [],

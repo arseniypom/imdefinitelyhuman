@@ -1,19 +1,7 @@
 @import "tailwindcss";
 
-/* ── Terminal Dark Theme (default) ── */
+/* ── Warm Analog Light Theme (default) ── */
 :root {
-  --background: #000000;
-  --foreground: #00ff41;
-  --accent: #00ff41;
-  --muted: #0a3a1a;
-  --border: #14532d;
-  --glow: rgba(0, 255, 65, 0.12);
-  --glow-strong: rgba(0, 255, 65, 0.25);
-  --surface: #0f1a14;
-}
-
-/* ── Warm Analog Light Theme ── */
-[data-theme="light"] {
   --background: #FDF8F3;
   --foreground: #2C2825;
   --accent: #D94F30;
@@ -23,6 +11,18 @@
   --glow: rgba(217, 79, 48, 0.08);
   --glow-strong: rgba(217, 79, 48, 0.16);
   --surface: #FFFFFF;
+}
+
+/* ── Terminal Dark Theme ── */
+[data-theme="terminal"] {
+  --background: #000000;
+  --foreground: #00ff41;
+  --accent: #00ff41;
+  --muted: #0a3a1a;
+  --border: #14532d;
+  --glow: rgba(0, 255, 65, 0.12);
+  --glow-strong: rgba(0, 255, 65, 0.25);
+  --surface: #0f1a14;
 }
 
 @theme inline {
@@ -42,17 +42,20 @@
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: var(--font-mono), "Courier New", monospace;
+  font-family: var(--font-body), "Helvetica Neue", system-ui, sans-serif;
   overflow-x: hidden;
+}
+
+[data-theme="terminal"] body {
+  font-family: var(--font-mono), "Courier New", monospace;
 }
 
 button {
   cursor: pointer;
 }
 
-/* Light theme body — warm layered gradient background */
-[data-theme="light"] body {
-  font-family: var(--font-body), "Helvetica Neue", system-ui, sans-serif;
+/* Light theme body — warm layered gradient background (default) */
+body {
   background:
     radial-gradient(ellipse at 75% 12%, rgba(232, 164, 74, 0.08) 0%, transparent 50%),
     radial-gradient(ellipse at 20% 85%, rgba(217, 79, 48, 0.04) 0%, transparent 45%),
@@ -60,12 +63,24 @@ button {
   background-attachment: fixed;
 }
 
-/* Light theme headings — editorial italic serif */
-[data-theme="light"] h2 {
+[data-theme="terminal"] body {
+  background: var(--background);
+  background-attachment: initial;
+}
+
+/* Editorial italic serif headings (default) */
+h2 {
   font-family: var(--font-display), Georgia, "Times New Roman", serif;
   font-style: italic;
   font-weight: 400;
   letter-spacing: -0.01em;
+}
+
+[data-theme="terminal"] h2 {
+  font-family: var(--font-mono), "Courier New", monospace;
+  font-style: normal;
+  font-weight: inherit;
+  letter-spacing: inherit;
 }
 
 /* ── Keyframes ── */
@@ -176,16 +191,28 @@ button {
   50% { transform: scale(1.015); }
 }
 
-/* Light theme animation overrides — replace glitchy with bouncy */
-[data-theme="light"] .animate-fadeSlideUp {
+/* Bouncy animations (default / light) */
+.animate-fadeSlideUp {
   animation-name: bounceSlideUp;
   animation-duration: 0.5s;
   animation-timing-function: cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
-[data-theme="light"] .animate-revealPop {
+.animate-revealPop {
   animation-name: warmReveal;
   animation-duration: 0.7s;
+  animation-timing-function: cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+[data-theme="terminal"] .animate-fadeSlideUp {
+  animation-name: fadeSlideUp;
+  animation-duration: 0.4s;
+  animation-timing-function: ease-out;
+}
+
+[data-theme="terminal"] .animate-revealPop {
+  animation-name: revealPop;
+  animation-duration: 0.6s;
   animation-timing-function: cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
@@ -238,48 +265,25 @@ button {
   z-index: 999;
 }
 
-/* ── Quiz Button ── */
+/* ── Quiz Button (light default) ── */
 .quiz-btn {
-  border: 1px solid var(--border);
-  background: transparent;
-  padding: 0.875rem 1.75rem;
-  font-family: var(--font-mono), "Courier New", monospace;
-  font-size: 0.9375rem;
-  color: var(--foreground);
-  cursor: pointer;
-  transition: all 0.2s ease;
-  position: relative;
-  text-align: center;
-  line-height: 1.4;
-}
-
-.quiz-btn:hover {
-  border-color: var(--foreground);
-  box-shadow: 0 0 16px var(--glow), inset 0 0 16px var(--glow);
-  text-shadow: 0 0 8px var(--glow-strong);
-}
-
-.quiz-btn:active {
-  transform: scale(0.97);
-}
-
-.quiz-btn:focus-visible {
-  outline: 1px solid var(--foreground);
-  outline-offset: 2px;
-}
-
-/* Light theme buttons — rounded pills with warm lift hover */
-[data-theme="light"] .quiz-btn {
   border: 1.5px solid var(--border);
   border-radius: 999px;
   background: var(--surface);
+  padding: 0.875rem 1.75rem;
   font-family: var(--font-body), system-ui, sans-serif;
+  font-size: 0.9375rem;
   font-weight: 500;
+  color: var(--foreground);
+  cursor: pointer;
+  position: relative;
+  text-align: center;
+  line-height: 1.4;
   box-shadow: 0 1px 4px rgba(44, 40, 37, 0.05), 0 1px 2px rgba(44, 40, 37, 0.03);
   transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
-[data-theme="light"] .quiz-btn:hover {
+.quiz-btn:hover {
   background: var(--foreground);
   color: var(--surface);
   border-color: var(--foreground);
@@ -288,24 +292,55 @@ button {
   text-shadow: none;
 }
 
-[data-theme="light"] .quiz-btn:active {
+.quiz-btn:active {
   transform: translateY(-1px) scale(0.98);
   box-shadow: 0 4px 12px rgba(44, 40, 37, 0.08);
 }
 
-[data-theme="light"] .quiz-btn:focus-visible {
+.quiz-btn:focus-visible {
   outline: 2px solid var(--accent);
   outline-offset: 3px;
 }
 
-/* ── Quiz Text Input ── */
+/* Terminal theme buttons — square, glowy */
+[data-theme="terminal"] .quiz-btn {
+  border: 1px solid var(--border);
+  border-radius: 0;
+  background: transparent;
+  font-family: var(--font-mono), "Courier New", monospace;
+  font-weight: normal;
+  box-shadow: none;
+  transition: all 0.2s ease;
+}
+
+[data-theme="terminal"] .quiz-btn:hover {
+  background: transparent;
+  color: var(--foreground);
+  border-color: var(--foreground);
+  box-shadow: 0 0 16px var(--glow), inset 0 0 16px var(--glow);
+  text-shadow: 0 0 8px var(--glow-strong);
+  transform: none;
+}
+
+[data-theme="terminal"] .quiz-btn:active {
+  transform: scale(0.97);
+  box-shadow: 0 0 16px var(--glow), inset 0 0 16px var(--glow);
+}
+
+[data-theme="terminal"] .quiz-btn:focus-visible {
+  outline: 1px solid var(--foreground);
+  outline-offset: 2px;
+}
+
+/* ── Quiz Text Input (light default) ── */
 .quiz-input {
   background: transparent;
   border: none;
-  border-bottom: 2px solid var(--border);
+  border-bottom: 2px dashed var(--border);
   color: var(--foreground);
-  font-family: var(--font-mono), "Courier New", monospace;
-  font-size: 1.25rem;
+  font-family: var(--font-display), Georgia, serif;
+  font-style: italic;
+  font-size: 1.375rem;
   padding: 0.5rem 0;
   outline: none;
   width: 100%;
@@ -314,98 +349,103 @@ button {
 }
 
 .quiz-input:focus {
-  border-bottom-color: var(--foreground);
-}
-
-.quiz-input::placeholder {
-  color: var(--muted);
-}
-
-/* Light theme input — italic serif, dashed "fill-in-the-blank" underline */
-[data-theme="light"] .quiz-input {
-  font-family: var(--font-display), Georgia, serif;
-  font-style: italic;
-  font-size: 1.375rem;
-  border-bottom-style: dashed;
-}
-
-[data-theme="light"] .quiz-input:focus {
   border-bottom-style: solid;
   border-bottom-color: var(--accent);
 }
 
-[data-theme="light"] .quiz-input::placeholder {
+.quiz-input::placeholder {
   font-family: var(--font-body), system-ui, sans-serif;
   font-style: normal;
   font-size: 1.125rem;
+  color: var(--muted);
   opacity: 0.45;
 }
 
-/* ── Range Slider ── */
+/* Terminal theme input */
+[data-theme="terminal"] .quiz-input {
+  font-family: var(--font-mono), "Courier New", monospace;
+  font-style: normal;
+  font-size: 1.25rem;
+  border-bottom-style: solid;
+}
+
+[data-theme="terminal"] .quiz-input:focus {
+  border-bottom-color: var(--foreground);
+}
+
+[data-theme="terminal"] .quiz-input::placeholder {
+  font-family: var(--font-mono), "Courier New", monospace;
+  font-size: 1.25rem;
+  opacity: 1;
+}
+
+/* ── Range Slider (light default) ── */
 input[type="range"] {
   -webkit-appearance: none;
   appearance: none;
   width: 100%;
-  height: 3px;
+  height: 6px;
   background: var(--border);
+  border-radius: 3px;
   outline: none;
   cursor: pointer;
 }
 
 input[type="range"]::-webkit-slider-thumb {
   -webkit-appearance: none;
-  width: 22px;
-  height: 22px;
-  background: var(--foreground);
-  cursor: pointer;
-  border: 2px solid var(--background);
-  box-shadow: 0 0 10px var(--glow);
-  transition: box-shadow 0.2s ease;
-}
-
-input[type="range"]::-webkit-slider-thumb:hover {
-  box-shadow: 0 0 20px var(--glow-strong);
-}
-
-input[type="range"]::-moz-range-thumb {
-  width: 22px;
-  height: 22px;
-  background: var(--foreground);
-  cursor: pointer;
-  border: 2px solid var(--background);
-  border-radius: 0;
-  box-shadow: 0 0 10px var(--glow);
-}
-
-/* Light theme slider — round warm coral thumb with soft shadow */
-[data-theme="light"] input[type="range"] {
-  height: 6px;
-  background: var(--border);
-  border-radius: 3px;
-}
-
-[data-theme="light"] input[type="range"]::-webkit-slider-thumb {
   width: 26px;
   height: 26px;
   background: var(--accent);
   border-radius: 50%;
+  cursor: pointer;
   border: 3px solid var(--surface);
   box-shadow: 0 2px 10px rgba(217, 79, 48, 0.3);
   transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
-[data-theme="light"] input[type="range"]::-webkit-slider-thumb:hover {
+input[type="range"]::-webkit-slider-thumb:hover {
   transform: scale(1.15);
   box-shadow: 0 3px 15px rgba(217, 79, 48, 0.4);
 }
 
-[data-theme="light"] input[type="range"]::-moz-range-thumb {
+input[type="range"]::-moz-range-thumb {
   width: 26px;
   height: 26px;
   background: var(--accent);
   border-radius: 50%;
+  cursor: pointer;
   border: 3px solid var(--surface);
   box-shadow: 0 2px 10px rgba(217, 79, 48, 0.3);
+}
+
+/* Terminal theme slider */
+[data-theme="terminal"] input[type="range"] {
+  height: 3px;
+  border-radius: 0;
+}
+
+[data-theme="terminal"] input[type="range"]::-webkit-slider-thumb {
+  width: 22px;
+  height: 22px;
+  background: var(--foreground);
+  border-radius: 0;
+  border: 2px solid var(--background);
+  box-shadow: 0 0 10px var(--glow);
+  transition: box-shadow 0.2s ease;
+}
+
+[data-theme="terminal"] input[type="range"]::-webkit-slider-thumb:hover {
+  transform: none;
+  box-shadow: 0 0 20px var(--glow-strong);
+}
+
+[data-theme="terminal"] input[type="range"]::-moz-range-thumb {
+  width: 22px;
+  height: 22px;
+  background: var(--foreground);
+  border-radius: 0;
+  border: 2px solid var(--background);
+  box-shadow: 0 0 10px var(--glow);
 }
 
 /* ── Utility Classes ── */
@@ -416,15 +456,14 @@ input[type="range"]::-moz-range-thumb {
 }
 
 .stagger-1 { animation-delay: 0ms; }
-.stagger-2 { animation-delay: 80ms; }
-.stagger-3 { animation-delay: 160ms; }
-.stagger-4 { animation-delay: 240ms; }
+.stagger-2 { animation-delay: 120ms; }
+.stagger-3 { animation-delay: 240ms; }
+.stagger-4 { animation-delay: 360ms; }
 
-/* Light theme stagger — more spaced out for bouncier feel */
-[data-theme="light"] .stagger-1 { animation-delay: 0ms; }
-[data-theme="light"] .stagger-2 { animation-delay: 120ms; }
-[data-theme="light"] .stagger-3 { animation-delay: 240ms; }
-[data-theme="light"] .stagger-4 { animation-delay: 360ms; }
+[data-theme="terminal"] .stagger-1 { animation-delay: 0ms; }
+[data-theme="terminal"] .stagger-2 { animation-delay: 80ms; }
+[data-theme="terminal"] .stagger-3 { animation-delay: 160ms; }
+[data-theme="terminal"] .stagger-4 { animation-delay: 240ms; }
 
 /* ── Captcha Checkbox ── */
 .captcha-box {
@@ -434,18 +473,23 @@ input[type="range"]::-moz-range-thumb {
 }
 
 .captcha-box:hover {
-  border-color: #22c55e;
+  border-color: var(--accent);
+  box-shadow: 0 4px 20px rgba(217, 79, 48, 0.08);
 }
 
-/* Light theme captcha — rounded, warm shadows */
-[data-theme="light"] .captcha-box {
+.captcha-box {
   border-radius: 16px;
   box-shadow: 0 2px 12px rgba(44, 40, 37, 0.06);
 }
 
-[data-theme="light"] .captcha-box:hover {
-  border-color: var(--accent);
-  box-shadow: 0 4px 20px rgba(217, 79, 48, 0.08);
+[data-theme="terminal"] .captcha-box {
+  border-radius: 0;
+  box-shadow: none;
+}
+
+[data-theme="terminal"] .captcha-box:hover {
+  border-color: #22c55e;
+  box-shadow: none;
 }
 
 .captcha-check {
@@ -454,13 +498,13 @@ input[type="range"]::-moz-range-thumb {
 
 /* ── Selection ── */
 ::selection {
-  background: rgba(0, 255, 65, 0.3);
-  color: #fff;
-}
-
-[data-theme="light"] ::selection {
   background: rgba(217, 79, 48, 0.15);
   color: var(--foreground);
+}
+
+[data-theme="terminal"] ::selection {
+  background: rgba(0, 255, 65, 0.3);
+  color: #fff;
 }
 
 /* ── Scrollbar ── */
@@ -476,23 +520,34 @@ input[type="range"]::-moz-range-thumb {
   background: var(--border);
 }
 
-[data-theme="light"] ::-webkit-scrollbar-thumb {
+::-webkit-scrollbar-thumb {
   border-radius: 2px;
 }
 
-/* ── Light theme utility: editorial serif italic ── */
-.light-serif {
-  font-family: var(--font-body), system-ui, sans-serif;
+[data-theme="terminal"] ::-webkit-scrollbar-thumb {
+  border-radius: 0;
 }
 
-[data-theme="light"] .light-serif {
+/* ── Editorial serif italic utility ── */
+.light-serif {
   font-family: var(--font-display), Georgia, serif;
   font-style: italic;
 }
 
-/* ── Light theme: result number — italic serif ── */
-[data-theme="light"] .result-number {
+[data-theme="terminal"] .light-serif {
+  font-family: var(--font-body), system-ui, sans-serif;
+  font-style: normal;
+}
+
+/* ── Result number — italic serif ── */
+.result-number {
   font-family: var(--font-display), Georgia, serif;
   font-style: italic;
   font-weight: 400;
+}
+
+[data-theme="terminal"] .result-number {
+  font-family: var(--font-mono), "Courier New", monospace;
+  font-style: normal;
+  font-weight: inherit;
 }

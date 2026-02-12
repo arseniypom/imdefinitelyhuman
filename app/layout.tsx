@@ -39,8 +39,8 @@ const themeScript = `
 (function(){
   try {
     var t = localStorage.getItem('imdefhuman_theme');
-    if (t === 'light' || t === 'terminal') {
-      document.documentElement.dataset.theme = t;
+    if (t === 'terminal') {
+      document.documentElement.dataset.theme = 'terminal';
     }
   } catch(e) {}
 })();
@@ -52,7 +52,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="dark">
+    <html lang="en" suppressHydrationWarning>
       <head>
         <script dangerouslySetInnerHTML={{ __html: themeScript }} />
       </head>

@@ -44,8 +44,10 @@ export function QuizShell() {
           : 'paper-texture'
       }`}
     >
-      <ThemeToggle />
-      <LanguageSwitcher />
+      <div className="fixed top-4 right-4 z-50 flex items-center gap-2">
+        <ThemeToggle />
+        <LanguageSwitcher />
+      </div>
 
       {/* Step counter */}
       {!isResult && (
