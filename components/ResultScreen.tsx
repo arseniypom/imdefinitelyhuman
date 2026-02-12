@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
+import confetti from 'canvas-confetti';
 import { useQuiz } from '@/lib/quiz-context';
 import { t } from '@/lib/i18n';
 import { calculatePercentage, getTierKey } from '@/lib/scoring';
@@ -43,6 +44,43 @@ export function ResultScreen() {
     animRef.current = requestAnimationFrame(animate);
     return () => cancelAnimationFrame(animRef.current);
   }, [finalPercent]);
+
+  // Side-cannon confetti on perfect score
+  useEffect(() => {
+    if (!countDone || finalPercent !== 100) return;
+
+    const colors = ['#a786ff', '#fd8bbc', '#eca184', '#f8deb1'];
+    const duration = 3000;
+    const start = performance.now();
+    let frame: number;
+
+    const fire = (now: number) => {
+      const elapsed = now - start;
+      if (elapsed > duration) return;
+
+      confetti({
+        particleCount: 2,
+        angle: 60,
+        spread: 55,
+        startVelocity: 60,
+        origin: { x: 0, y: 0.5 },
+        colors,
+      });
+      confetti({
+        particleCount: 2,
+        angle: 120,
+        spread: 55,
+        startVelocity: 60,
+        origin: { x: 1, y: 0.5 },
+        colors,
+      });
+
+      frame = requestAnimationFrame(fire);
+    };
+
+    frame = requestAnimationFrame(fire);
+    return () => cancelAnimationFrame(frame);
+  }, [countDone, finalPercent]);
 
   const tierKey = getTierKey(finalPercent);
   const handleRestart = () => dispatch({ type: 'RESTART' });

@@ -49,4 +49,3 @@ Theme set on `document.documentElement.dataset.theme`. A blocking `<script>` in 
 - Step components are named `Step{Name}.tsx` and live in `components/steps/`
 - Shared button/input styles: `.quiz-btn`, `.quiz-input` classes in `globals.css`
 - Stagger animations use `.stagger-1` through `.stagger-4` classes
-- The spec (`spec.md`) defines all quiz questions, scoring rules, and result tiers in detail
