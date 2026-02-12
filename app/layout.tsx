@@ -37,7 +37,7 @@ export const metadata: Metadata = {
   manifest: "/site.webmanifest",
   openGraph: {
     title: "Are You Human?",
-    description: "Take this quiz to find out if you're a real human or just GPT-4 in a trenchcoat.",
+    description: "Take this quiz to find out if you're a real human or just GPT in a trenchcoat.",
     type: "website",
   },
 };
