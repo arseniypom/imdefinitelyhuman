@@ -1,4 +1,4 @@
-export type Lang = 'ru' | 'en';
+export type Lang = 'ru' | 'en' | 'es';
 export type Theme = 'terminal' | 'light';
 
 export interface StepAnswer {

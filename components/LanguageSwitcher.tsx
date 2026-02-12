@@ -8,6 +8,7 @@ import type { Lang } from '@/lib/types';
 const LANGUAGES: { code: Lang; label: string }[] = [
   { code: 'en', label: 'English' },
   { code: 'ru', label: 'Русский' },
+  { code: 'es', label: 'Español' },
 ];
 
 export function LanguageSwitcher() {
