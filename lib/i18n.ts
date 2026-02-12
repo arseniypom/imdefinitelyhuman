@@ -12,7 +12,7 @@ const dict: Record<string, Record<Lang, string>> = {
   },
   'step1.submit': {
     en: 'Enter',
-    ru: 'Войти',
+    ru: 'Начать',
   },
 
   // ── Step 2: Dashes ──
@@ -32,7 +32,7 @@ const dict: Record<string, Record<Lang, string>> = {
   // ── Step 3: Response ──
   'step3.question': {
     en: 'Someone asks you a hard question. How do you start your answer?',
-    ru: 'Тебя спросили сложный вопрос. Как ты начнёшь ответ?',
+    ru: 'Тебе задали сложный вопрос. Как ты начнёшь ответ?',
   },
   'step3.great': {
     en: 'Great question!',
@@ -94,7 +94,7 @@ const dict: Record<string, Record<Lang, string>> = {
   },
   'step6.confirm': {
     en: 'Lock in',
-    ru: 'Зафиксировать',
+    ru: 'Готово',
   },
 
   // ── Step 7: 3AM ──
@@ -148,7 +148,7 @@ const dict: Record<string, Record<Lang, string>> = {
   },
   'step9.confirm': {
     en: 'Confirm',
-    ru: 'Подтвердить',
+    ru: 'Готово',
   },
 
   // ── Step 10: Final ──
@@ -166,7 +166,7 @@ const dict: Record<string, Record<Lang, string>> = {
   },
   'step10.complicated': {
     en: "It's complicated...",
-    ru: 'Это сложный вопрос...',
+    ru: 'Всё сложно...',
   },
 
   // ── Result Screen ──
@@ -175,8 +175,8 @@ const dict: Record<string, Record<Lang, string>> = {
     ru: '{name}, ты на {score}% человек',
   },
   'result.tier0': {
-    en: "You're definitely GPT-4 in a trenchcoat",
-    ru: 'Ты точно GPT-4 в тренче',
+    en: "You're definitely GPT-5.2 in a trenchcoat",
+    ru: 'Ты точно GPT-5.2 в плаще',
   },
   'result.tier1': {
     en: 'Suspicious... Take the captcha again',
@@ -196,7 +196,7 @@ const dict: Record<string, Record<Lang, string>> = {
   },
   'result.tier5': {
     en: 'Verified. 100% organic',
-    ru: 'Верифицирован. 100% органика',
+    ru: 'Подтверждено. 100% органика',
   },
   // ── UI ──
   'ui.restart': {
