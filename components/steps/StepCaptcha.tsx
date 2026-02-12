@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import posthog from 'posthog-js';
 import { useQuiz } from '@/lib/quiz-context';
 import { t } from '@/lib/i18n';
 import { scoreStep } from '@/lib/scoring';
@@ -23,12 +24,14 @@ export function StepCaptcha() {
 
     // Auto-advance after "verification"
     setTimeout(() => {
+      posthog.capture('step_completed', { step: 7, value: 'checkbox' });
       dispatch({ type: 'ANSWER_STEP', answer: { stepIndex: 7, value: 'checkbox', score: scoreStep(7, 'checkbox') } });
       dispatch({ type: 'NEXT_STEP' });
     }, 1200);
   };
 
   const handleNotSure = () => {
+    posthog.capture('step_completed', { step: 7, value: 'not_sure' });
     dispatch({ type: 'ANSWER_STEP', answer: { stepIndex: 7, value: 'not_sure', score: scoreStep(7, 'not_sure') } });
     dispatch({ type: 'NEXT_STEP' });
   };

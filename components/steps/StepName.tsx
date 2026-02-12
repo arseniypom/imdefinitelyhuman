@@ -13,7 +13,7 @@ export function StepName() {
   const submit = () => {
     const name = value.trim();
     if (!name) return;
-    posthog.capture('name_entered', { name });
+    posthog.capture('step_completed', { step: 0, value: name });
     dispatch({ type: 'SET_NAME', name });
     dispatch({ type: 'ANSWER_STEP', answer: { stepIndex: 0, value: name, score: 0 } });
     dispatch({ type: 'NEXT_STEP' });

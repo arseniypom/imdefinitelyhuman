@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useRef, useEffect } from 'react';
+import posthog from 'posthog-js';
 import { useQuiz } from '@/lib/quiz-context';
 import type { Lang } from '@/lib/types';
 
@@ -24,6 +25,7 @@ export function LanguageSwitcher() {
   }, [open]);
 
   const select = (lang: Lang) => {
+    posthog.capture('language_changed', { lang });
     dispatch({ type: 'SET_LANG', lang });
     setOpen(false);
   };

@@ -1,5 +1,6 @@
 'use client';
 
+import posthog from 'posthog-js';
 import { useQuiz } from '@/lib/quiz-context';
 import { t } from '@/lib/i18n';
 import { scoreStep } from '@/lib/scoring';
@@ -16,6 +17,7 @@ export function Step3AM() {
 
   const handleAnswer = (value: string) => {
     const score = scoreStep(6, value);
+    posthog.capture('step_completed', { step: 6, value });
     dispatch({ type: 'ANSWER_STEP', answer: { stepIndex: 6, value, score } });
     dispatch({ type: 'NEXT_STEP' });
   };

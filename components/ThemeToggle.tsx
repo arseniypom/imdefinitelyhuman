@@ -1,13 +1,17 @@
 'use client';
 
+import posthog from 'posthog-js';
 import { useQuiz } from '@/lib/quiz-context';
 
 export function ThemeToggle() {
   const { state, dispatch } = useQuiz();
   const isTerminal = state.theme === 'terminal';
 
-  const toggle = () =>
-    dispatch({ type: 'SET_THEME', theme: isTerminal ? 'light' : 'terminal' });
+  const toggle = () => {
+    const newTheme = isTerminal ? 'light' : 'terminal';
+    posthog.capture('theme_changed', { theme: newTheme });
+    dispatch({ type: 'SET_THEME', theme: newTheme });
+  };
 
   return (
     <button

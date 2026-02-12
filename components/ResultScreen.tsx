@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react';
 import confetti from 'canvas-confetti';
+import posthog from 'posthog-js';
 import { useQuiz } from '@/lib/quiz-context';
 import { t } from '@/lib/i18n';
 import { calculatePercentage, getTierKey } from '@/lib/scoring';
@@ -13,6 +14,17 @@ const STROKE = 8;
 const ARC_D = `M 15 100 A ${R} ${R} 0 0 1 185 100`;
 // viewBox sized to contain stroke + round linecaps with padding
 const VB = '5 5 190 103';
+const COMPLETIONS_KEY = 'imdefhuman_completions';
+
+function incrementCompletions(): number {
+  try {
+    const count = Number(localStorage.getItem(COMPLETIONS_KEY) || 0) + 1;
+    localStorage.setItem(COMPLETIONS_KEY, String(count));
+    return count;
+  } catch {
+    return 1;
+  }
+}
 
 export function ResultScreen() {
   const { state, dispatch } = useQuiz();
@@ -22,6 +34,11 @@ export function ResultScreen() {
   const [arcProgress, setArcProgress] = useState(0);
   const animRef = useRef<number>(0);
   const isTerminal = state.theme === 'terminal';
+
+  useEffect(() => {
+    const completions = incrementCompletions();
+    posthog.capture('quiz_completed', { percentage: finalPercent, completions });
+  }, [finalPercent]);
 
   useEffect(() => {
     const duration = 2400;
@@ -83,7 +100,10 @@ export function ResultScreen() {
   }, [countDone, finalPercent]);
 
   const tierKey = getTierKey(finalPercent);
-  const handleRestart = () => dispatch({ type: 'RESTART' });
+  const handleRestart = () => {
+    posthog.capture('quiz_restarted');
+    dispatch({ type: 'RESTART' });
+  };
 
   // pathLength="1" lets us use simple 0–1 math for dashoffset
   const fillOffset = 1 - arcProgress;

@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import posthog from 'posthog-js';
 import { useQuiz } from '@/lib/quiz-context';
 import { t } from '@/lib/i18n';
 import { scoreStep } from '@/lib/scoring';
@@ -11,6 +12,7 @@ export function StepGPU() {
 
   const submit = () => {
     const score = scoreStep(5, value);
+    posthog.capture('step_completed', { step: 5, value });
     dispatch({ type: 'ANSWER_STEP', answer: { stepIndex: 5, value, score } });
     dispatch({ type: 'NEXT_STEP' });
   };
