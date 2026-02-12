@@ -12,6 +12,7 @@ export function ResultScreen() {
   const [copied, setCopied] = useState(false);
   const [countDone, setCountDone] = useState(false);
   const animRef = useRef<number>(0);
+  const isTerminal = state.theme === 'terminal';
 
   // Count-up animation
   useEffect(() => {
@@ -58,14 +59,22 @@ export function ResultScreen() {
   return (
     <div className="flex w-full max-w-lg flex-col items-center gap-8 text-center">
       {/* Decorative header */}
-      <div className="text-xs tracking-[0.3em] text-[--terminal-dim] uppercase animate-fadeSlideUp">
-        {'// analysis_complete'}
+      <div className={`text-xs text-[--muted] animate-fadeSlideUp ${
+        isTerminal ? 'tracking-[0.3em] uppercase' : 'tracking-[0.15em] light-serif'
+      }`}>
+        {isTerminal ? '// analysis_complete' : 'your result'}
       </div>
 
       {/* Big percentage */}
       <div
-        className={`text-[5rem] sm:text-[7rem] font-bold tabular-nums leading-none ${
-          countDone ? 'animate-glitch' : ''
+        className={`text-[5rem] sm:text-[7rem] tabular-nums leading-none ${
+          isTerminal ? 'font-bold' : 'result-number'
+        } ${
+          countDone
+            ? isTerminal
+              ? 'animate-glitch'
+              : 'animate-revealPop text-[--accent]'
+            : ''
         }`}
       >
         {displayNum}%
@@ -80,12 +89,22 @@ export function ResultScreen() {
       </p>
 
       {/* Tier message */}
-      <p className="text-sm text-[--terminal-dim] italic animate-fadeSlideUp opacity-0 [animation-fill-mode:forwards] stagger-3">
+      <p className={`text-sm text-[--muted] animate-fadeSlideUp opacity-0 [animation-fill-mode:forwards] stagger-3 ${
+        isTerminal ? 'italic' : 'light-serif'
+      }`}>
         &quot;{t(tierKey, state.lang)}&quot;
       </p>
 
       {/* Divider */}
-      <div className="w-32 h-px bg-[--terminal-border] my-2" />
+      {isTerminal ? (
+        <div className="w-32 h-px bg-[--border] my-2" />
+      ) : (
+        <div className="flex items-center gap-3 my-2">
+          <div className="w-8 h-px bg-[--border]" />
+          <div className="w-2 h-2 rounded-full border border-[--accent] opacity-40" />
+          <div className="w-8 h-px bg-[--border]" />
+        </div>
+      )}
 
       {/* Action buttons */}
       <div className="flex gap-4 animate-fadeSlideUp opacity-0 [animation-fill-mode:forwards] stagger-4">
@@ -97,13 +116,23 @@ export function ResultScreen() {
         </button>
       </div>
 
-      {/* ASCII decoration */}
-      <pre className="text-[10px] text-[--terminal-dim] opacity-30 leading-tight mt-4 select-none">
+      {/* Footer decoration */}
+      {isTerminal ? (
+        <pre className="text-[10px] text-[--muted] opacity-30 leading-tight mt-4 select-none">
 {`  ╔══════════════════════╗
   ║  HUMAN VERIFICATION  ║
   ║     PROTOCOL v0.1    ║
   ╚══════════════════════╝`}
-      </pre>
+        </pre>
+      ) : (
+        <div className="flex items-center gap-3 mt-4 select-none opacity-35">
+          <div className="w-1 h-1 rounded-full bg-[--accent]" />
+          <span className="text-[11px] text-[--muted] tracking-[0.2em] light-serif">
+            human verification protocol
+          </span>
+          <div className="w-1 h-1 rounded-full bg-[--accent]" />
+        </div>
+      )}
     </div>
   );
 }

@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Geist, Geist_Mono, Instrument_Serif, DM_Sans } from "next/font/google";
 import { QuizProvider } from "@/lib/quiz-context";
 import "./globals.css";
 
@@ -13,6 +13,18 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
+const instrumentSerif = Instrument_Serif({
+  variable: "--font-display",
+  subsets: ["latin"],
+  weight: "400",
+  style: ["normal", "italic"],
+});
+
+const dmSans = DM_Sans({
+  variable: "--font-body",
+  subsets: ["latin"],
+});
+
 export const metadata: Metadata = {
   title: "Are You Human? 🤖",
   description: "A fun quiz that determines how human you are (vs AI) — expressed as a percentage.",
@@ -23,6 +35,17 @@ export const metadata: Metadata = {
   },
 };
 
+const themeScript = `
+(function(){
+  try {
+    var t = localStorage.getItem('imdefhuman_theme');
+    if (t === 'light' || t === 'terminal') {
+      document.documentElement.dataset.theme = t;
+    }
+  } catch(e) {}
+})();
+`;
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -30,8 +53,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="dark">
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: themeScript }} />
+      </head>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} ${instrumentSerif.variable} ${dmSans.variable} antialiased`}
       >
         <QuizProvider>{children}</QuizProvider>
       </body>

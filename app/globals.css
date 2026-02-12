@@ -1,14 +1,28 @@
 @import "tailwindcss";
 
-/* ── Terminal Dark Theme ── */
+/* ── Terminal Dark Theme (default) ── */
 :root {
   --background: #000000;
   --foreground: #00ff41;
-  --terminal-dim: #0a3a1a;
-  --terminal-border: #14532d;
-  --terminal-glow: rgba(0, 255, 65, 0.12);
-  --terminal-glow-strong: rgba(0, 255, 65, 0.25);
-  --captcha-bg: #0f1a14;
+  --accent: #00ff41;
+  --muted: #0a3a1a;
+  --border: #14532d;
+  --glow: rgba(0, 255, 65, 0.12);
+  --glow-strong: rgba(0, 255, 65, 0.25);
+  --surface: #0f1a14;
+}
+
+/* ── Warm Analog Light Theme ── */
+[data-theme="light"] {
+  --background: #FDF8F3;
+  --foreground: #2C2825;
+  --accent: #D94F30;
+  --accent-warm: #E8A44A;
+  --muted: #8A8580;
+  --border: #E6DFD7;
+  --glow: rgba(217, 79, 48, 0.08);
+  --glow-strong: rgba(217, 79, 48, 0.16);
+  --surface: #FFFFFF;
 }
 
 @theme inline {
@@ -20,6 +34,9 @@
   --animate-blink: blink 1s step-end infinite;
   --animate-glitch: glitch 2s ease-in-out infinite;
   --animate-flicker: flicker 4s linear infinite;
+  --animate-revealPop: revealPop 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+  --animate-bounceSlideUp: bounceSlideUp 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+  --animate-warmReveal: warmReveal 0.7s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 body {
@@ -27,6 +44,28 @@ body {
   color: var(--foreground);
   font-family: var(--font-mono), "Courier New", monospace;
   overflow-x: hidden;
+}
+
+button {
+  cursor: pointer;
+}
+
+/* Light theme body — warm layered gradient background */
+[data-theme="light"] body {
+  font-family: var(--font-body), "Helvetica Neue", system-ui, sans-serif;
+  background:
+    radial-gradient(ellipse at 75% 12%, rgba(232, 164, 74, 0.08) 0%, transparent 50%),
+    radial-gradient(ellipse at 20% 85%, rgba(217, 79, 48, 0.04) 0%, transparent 45%),
+    linear-gradient(168deg, #FDF8F3 0%, #FFF5EB 30%, #FDF8F3 60%, #F9F1E6 100%);
+  background-attachment: fixed;
+}
+
+/* Light theme headings — editorial italic serif */
+[data-theme="light"] h2 {
+  font-family: var(--font-display), Georgia, "Times New Roman", serif;
+  font-style: italic;
+  font-weight: 400;
+  letter-spacing: -0.01em;
 }
 
 /* ── Keyframes ── */
@@ -92,7 +131,65 @@ body {
   100% { transform: scale(1); }
 }
 
-/* ── Scanline CRT Overlay ── */
+@keyframes revealPop {
+  0% {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Light theme keyframes — bouncy, organic, warm */
+@keyframes bounceSlideUp {
+  0% {
+    opacity: 0;
+    transform: translateY(28px) scale(0.97);
+  }
+  60% {
+    transform: translateY(-3px) scale(1.01);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes warmReveal {
+  0% {
+    opacity: 0;
+    transform: scale(0.8) rotate(-2deg);
+  }
+  65% {
+    transform: scale(1.04) rotate(0.5deg);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) rotate(0deg);
+  }
+}
+
+@keyframes softBreathe {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.015); }
+}
+
+/* Light theme animation overrides — replace glitchy with bouncy */
+[data-theme="light"] .animate-fadeSlideUp {
+  animation-name: bounceSlideUp;
+  animation-duration: 0.5s;
+  animation-timing-function: cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+[data-theme="light"] .animate-revealPop {
+  animation-name: warmReveal;
+  animation-duration: 0.7s;
+  animation-timing-function: cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* ── Scanline CRT Overlay (dark/terminal only) ── */
 .scanline-overlay::before {
   content: '';
   position: fixed;
@@ -118,9 +215,32 @@ body {
   z-index: 999;
 }
 
+/* ── Paper Texture Overlay (light theme) ── */
+.paper-texture::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.7' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 256px 256px;
+  pointer-events: none;
+  z-index: 1000;
+  mix-blend-mode: multiply;
+}
+
+/* Warm soft vignette for light theme */
+.paper-texture::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background: radial-gradient(ellipse at center, transparent 55%, rgba(249, 241, 230, 0.5) 100%);
+  pointer-events: none;
+  z-index: 999;
+}
+
 /* ── Quiz Button ── */
 .quiz-btn {
-  border: 1px solid var(--terminal-border);
+  border: 1px solid var(--border);
   background: transparent;
   padding: 0.875rem 1.75rem;
   font-family: var(--font-mono), "Courier New", monospace;
@@ -135,8 +255,8 @@ body {
 
 .quiz-btn:hover {
   border-color: var(--foreground);
-  box-shadow: 0 0 16px var(--terminal-glow), inset 0 0 16px var(--terminal-glow);
-  text-shadow: 0 0 8px var(--terminal-glow-strong);
+  box-shadow: 0 0 16px var(--glow), inset 0 0 16px var(--glow);
+  text-shadow: 0 0 8px var(--glow-strong);
 }
 
 .quiz-btn:active {
@@ -148,11 +268,41 @@ body {
   outline-offset: 2px;
 }
 
+/* Light theme buttons — rounded pills with warm lift hover */
+[data-theme="light"] .quiz-btn {
+  border: 1.5px solid var(--border);
+  border-radius: 999px;
+  background: var(--surface);
+  font-family: var(--font-body), system-ui, sans-serif;
+  font-weight: 500;
+  box-shadow: 0 1px 4px rgba(44, 40, 37, 0.05), 0 1px 2px rgba(44, 40, 37, 0.03);
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+[data-theme="light"] .quiz-btn:hover {
+  background: var(--foreground);
+  color: var(--surface);
+  border-color: var(--foreground);
+  box-shadow: 0 8px 24px rgba(44, 40, 37, 0.12);
+  transform: translateY(-3px);
+  text-shadow: none;
+}
+
+[data-theme="light"] .quiz-btn:active {
+  transform: translateY(-1px) scale(0.98);
+  box-shadow: 0 4px 12px rgba(44, 40, 37, 0.08);
+}
+
+[data-theme="light"] .quiz-btn:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
 /* ── Quiz Text Input ── */
 .quiz-input {
   background: transparent;
   border: none;
-  border-bottom: 2px solid var(--terminal-border);
+  border-bottom: 2px solid var(--border);
   color: var(--foreground);
   font-family: var(--font-mono), "Courier New", monospace;
   font-size: 1.25rem;
@@ -168,7 +318,27 @@ body {
 }
 
 .quiz-input::placeholder {
-  color: var(--terminal-dim);
+  color: var(--muted);
+}
+
+/* Light theme input — italic serif, dashed "fill-in-the-blank" underline */
+[data-theme="light"] .quiz-input {
+  font-family: var(--font-display), Georgia, serif;
+  font-style: italic;
+  font-size: 1.375rem;
+  border-bottom-style: dashed;
+}
+
+[data-theme="light"] .quiz-input:focus {
+  border-bottom-style: solid;
+  border-bottom-color: var(--accent);
+}
+
+[data-theme="light"] .quiz-input::placeholder {
+  font-family: var(--font-body), system-ui, sans-serif;
+  font-style: normal;
+  font-size: 1.125rem;
+  opacity: 0.45;
 }
 
 /* ── Range Slider ── */
@@ -177,7 +347,7 @@ input[type="range"] {
   appearance: none;
   width: 100%;
   height: 3px;
-  background: var(--terminal-border);
+  background: var(--border);
   outline: none;
   cursor: pointer;
 }
@@ -189,12 +359,12 @@ input[type="range"]::-webkit-slider-thumb {
   background: var(--foreground);
   cursor: pointer;
   border: 2px solid var(--background);
-  box-shadow: 0 0 10px var(--terminal-glow);
+  box-shadow: 0 0 10px var(--glow);
   transition: box-shadow 0.2s ease;
 }
 
 input[type="range"]::-webkit-slider-thumb:hover {
-  box-shadow: 0 0 20px var(--terminal-glow-strong);
+  box-shadow: 0 0 20px var(--glow-strong);
 }
 
 input[type="range"]::-moz-range-thumb {
@@ -204,7 +374,38 @@ input[type="range"]::-moz-range-thumb {
   cursor: pointer;
   border: 2px solid var(--background);
   border-radius: 0;
-  box-shadow: 0 0 10px var(--terminal-glow);
+  box-shadow: 0 0 10px var(--glow);
+}
+
+/* Light theme slider — round warm coral thumb with soft shadow */
+[data-theme="light"] input[type="range"] {
+  height: 6px;
+  background: var(--border);
+  border-radius: 3px;
+}
+
+[data-theme="light"] input[type="range"]::-webkit-slider-thumb {
+  width: 26px;
+  height: 26px;
+  background: var(--accent);
+  border-radius: 50%;
+  border: 3px solid var(--surface);
+  box-shadow: 0 2px 10px rgba(217, 79, 48, 0.3);
+  transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+[data-theme="light"] input[type="range"]::-webkit-slider-thumb:hover {
+  transform: scale(1.15);
+  box-shadow: 0 3px 15px rgba(217, 79, 48, 0.4);
+}
+
+[data-theme="light"] input[type="range"]::-moz-range-thumb {
+  width: 26px;
+  height: 26px;
+  background: var(--accent);
+  border-radius: 50%;
+  border: 3px solid var(--surface);
+  box-shadow: 0 2px 10px rgba(217, 79, 48, 0.3);
 }
 
 /* ── Utility Classes ── */
@@ -219,15 +420,32 @@ input[type="range"]::-moz-range-thumb {
 .stagger-3 { animation-delay: 160ms; }
 .stagger-4 { animation-delay: 240ms; }
 
+/* Light theme stagger — more spaced out for bouncier feel */
+[data-theme="light"] .stagger-1 { animation-delay: 0ms; }
+[data-theme="light"] .stagger-2 { animation-delay: 120ms; }
+[data-theme="light"] .stagger-3 { animation-delay: 240ms; }
+[data-theme="light"] .stagger-4 { animation-delay: 360ms; }
+
 /* ── Captcha Checkbox ── */
 .captcha-box {
-  border: 2px solid var(--terminal-border);
-  background: var(--captcha-bg);
+  border: 2px solid var(--border);
+  background: var(--surface);
   transition: all 0.3s ease;
 }
 
 .captcha-box:hover {
   border-color: #22c55e;
+}
+
+/* Light theme captcha — rounded, warm shadows */
+[data-theme="light"] .captcha-box {
+  border-radius: 16px;
+  box-shadow: 0 2px 12px rgba(44, 40, 37, 0.06);
+}
+
+[data-theme="light"] .captcha-box:hover {
+  border-color: var(--accent);
+  box-shadow: 0 4px 20px rgba(217, 79, 48, 0.08);
 }
 
 .captcha-check {
@@ -240,6 +458,11 @@ input[type="range"]::-moz-range-thumb {
   color: #fff;
 }
 
+[data-theme="light"] ::selection {
+  background: rgba(217, 79, 48, 0.15);
+  color: var(--foreground);
+}
+
 /* ── Scrollbar ── */
 ::-webkit-scrollbar {
   width: 4px;
@@ -250,5 +473,26 @@ input[type="range"]::-moz-range-thumb {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: var(--terminal-border);
+  background: var(--border);
+}
+
+[data-theme="light"] ::-webkit-scrollbar-thumb {
+  border-radius: 2px;
+}
+
+/* ── Light theme utility: editorial serif italic ── */
+.light-serif {
+  font-family: var(--font-body), system-ui, sans-serif;
+}
+
+[data-theme="light"] .light-serif {
+  font-family: var(--font-display), Georgia, serif;
+  font-style: italic;
+}
+
+/* ── Light theme: result number — italic serif ── */
+[data-theme="light"] .result-number {
+  font-family: var(--font-display), Georgia, serif;
+  font-style: italic;
+  font-weight: 400;
 }

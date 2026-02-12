@@ -1,4 +1,5 @@
 export type Lang = 'ru' | 'en';
+export type Theme = 'terminal' | 'light';
 
 export interface StepAnswer {
   stepIndex: number;
@@ -8,6 +9,7 @@ export interface StepAnswer {
 
 export interface QuizState {
   lang: Lang;
+  theme: Theme;
   currentStep: number; // 0-9 = questions, 10 = result
   name: string;
   answers: StepAnswer[];
@@ -16,6 +18,7 @@ export interface QuizState {
 
 export type QuizAction =
   | { type: 'SET_LANG'; lang: Lang }
+  | { type: 'SET_THEME'; theme: Theme }
   | { type: 'SET_NAME'; name: string }
   | { type: 'ANSWER_STEP'; answer: StepAnswer }
   | { type: 'NEXT_STEP' }

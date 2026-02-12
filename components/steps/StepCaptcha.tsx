@@ -8,6 +8,7 @@ export function StepCaptcha() {
   const { state, dispatch } = useQuiz();
   const [checked, setChecked] = useState(false);
   const [verifying, setVerifying] = useState(false);
+  const isTerminal = state.theme === 'terminal';
 
   const handleCheck = () => {
     if (checked || verifying) return;
@@ -43,11 +44,13 @@ export function StepCaptcha() {
           {/* Checkbox */}
           <div
             className={`flex h-7 w-7 shrink-0 items-center justify-center border-2 transition-all duration-300 ${
+              !isTerminal ? 'rounded-lg' : ''
+            } ${
               checked
                 ? 'border-[--foreground] bg-[--foreground]/10'
                 : verifying
-                  ? 'border-[--terminal-dim] animate-pulse'
-                  : 'border-[--terminal-border] hover:border-[--foreground]'
+                  ? 'border-[--muted] animate-pulse'
+                  : 'border-[--border] hover:border-[--foreground]'
             }`}
           >
             {checked && (
@@ -56,12 +59,12 @@ export function StepCaptcha() {
               </span>
             )}
             {verifying && (
-              <span className="text-[--terminal-dim] text-xs animate-spin">◐</span>
+              <span className="text-[--muted] text-xs animate-spin">◐</span>
             )}
           </div>
 
           {/* Label */}
-          <span className="font-mono text-sm text-[--foreground]">
+          <span className="text-sm text-[--foreground]">
             {verifying
               ? t('step8.verifying', state.lang)
               : t('step8.label', state.lang)}
@@ -69,11 +72,17 @@ export function StepCaptcha() {
         </button>
       </div>
 
-      {/* Fake branding */}
-      <div className="flex items-center gap-2 text-[10px] text-[--terminal-dim] font-mono tracking-wider">
-        <span className="opacity-40">◧</span>
-        reCAPTCHA_v0.1
-        <span className="opacity-30">{'// human_verification_protocol'}</span>
+      {/* Branding */}
+      <div className="flex items-center gap-2 text-[10px] text-[--muted] tracking-wider">
+        {isTerminal ? (
+          <>
+            <span className="opacity-40">◧</span>
+            reCAPTCHA_v0.1
+            <span className="opacity-30">{'// human_verification_protocol'}</span>
+          </>
+        ) : (
+          <span className="tracking-[0.15em] light-serif">reCAPTCHA · Privacy · Terms</span>
+        )}
       </div>
 
       {/* Alternative */}

@@ -13,9 +13,11 @@ import type { QuizState, QuizAction } from './types';
 import { saveState, loadState, clearState } from './storage';
 
 const TOTAL_STEPS = 10;
+const THEME_KEY = 'imdefhuman_theme';
 
 const initialState: QuizState = {
   lang: 'en',
+  theme: 'terminal',
   currentStep: 0,
   name: '',
   answers: [],
@@ -26,6 +28,8 @@ function quizReducer(state: QuizState, action: QuizAction): QuizState {
   switch (action.type) {
     case 'SET_LANG':
       return { ...state, lang: action.lang };
+    case 'SET_THEME':
+      return { ...state, theme: action.theme };
     case 'SET_NAME':
       return { ...state, name: action.name };
     case 'ANSWER_STEP':
@@ -45,7 +49,7 @@ function quizReducer(state: QuizState, action: QuizAction): QuizState {
       return { ...state, isTransitioning: action.value };
     case 'RESTART':
       clearState();
-      return { ...initialState, lang: state.lang };
+      return { ...initialState, lang: state.lang, theme: state.theme };
     case 'RESTORE':
       return action.state;
     default:
@@ -68,10 +72,25 @@ export function QuizProvider({ children }: { children: ReactNode }) {
     if (saved) {
       dispatch({ type: 'RESTORE', state: saved });
     }
+    // Restore theme from dedicated key (flash-prevention script already set data-theme)
+    try {
+      const savedTheme = localStorage.getItem(THEME_KEY);
+      if (savedTheme === 'light' || savedTheme === 'terminal') {
+        dispatch({ type: 'SET_THEME', theme: savedTheme });
+      }
+    } catch { /* ignore */ }
     hydrated.current = true;
   }, []);
 
-  // Persist to localStorage on state change (after hydration)
+  // Sync theme to DOM + localStorage
+  useEffect(() => {
+    document.documentElement.dataset.theme = state.theme;
+    try {
+      localStorage.setItem(THEME_KEY, state.theme);
+    } catch { /* ignore */ }
+  }, [state.theme]);
+
+  // Persist quiz state to localStorage on state change (after hydration)
   useEffect(() => {
     if (hydrated.current && !state.isTransitioning) {
       saveState(state);

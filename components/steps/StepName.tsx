@@ -7,6 +7,7 @@ import { t } from '@/lib/i18n';
 export function StepName() {
   const { state, dispatch } = useQuiz();
   const [value, setValue] = useState(state.name);
+  const isTerminal = state.theme === 'terminal';
 
   const submit = () => {
     const name = value.trim();
@@ -19,8 +20,10 @@ export function StepName() {
   return (
     <div className="flex w-full max-w-md flex-col items-center gap-10">
       <div className="text-center">
-        <div className="mb-3 text-xs tracking-[0.3em] text-[--terminal-dim] uppercase">
-          {'// initialization'}
+        <div className={`mb-3 text-xs text-[--muted] ${
+          isTerminal ? 'tracking-[0.3em] uppercase' : 'tracking-[0.15em] light-serif'
+        }`}>
+          {isTerminal ? '// initialization' : 'begin'}
         </div>
         <h2 className="text-xl leading-relaxed sm:text-2xl">
           {t('step1.question', state.lang)}
@@ -29,7 +32,9 @@ export function StepName() {
 
       <div className="w-full">
         <div className="flex items-baseline gap-2">
-          <span className="text-[--terminal-dim] text-sm select-none">&gt;</span>
+          {isTerminal && (
+            <span className="text-[--muted] text-sm select-none">&gt;</span>
+          )}
           <input
             type="text"
             value={value}
@@ -46,10 +51,10 @@ export function StepName() {
       <button
         onClick={submit}
         disabled={!value.trim()}
-        className="quiz-btn disabled:opacity-20 disabled:cursor-not-allowed disabled:hover:border-[--terminal-border] disabled:hover:shadow-none"
+        className="quiz-btn disabled:opacity-20 disabled:cursor-not-allowed disabled:hover:border-[--border] disabled:hover:shadow-none"
       >
         {t('step1.submit', state.lang)}
-        <span className="ml-2 text-[--terminal-dim]">↵</span>
+        <span className="ml-2 text-[--muted]">↵</span>
       </button>
     </div>
   );

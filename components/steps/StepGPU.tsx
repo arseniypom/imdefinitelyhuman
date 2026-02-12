@@ -30,7 +30,7 @@ export function StepGPU() {
           value={value}
           onChange={(e) => setValue(Number(e.target.value))}
         />
-        <div className="flex justify-between text-xs text-[--terminal-dim]">
+        <div className="flex justify-between text-xs text-[--muted]">
           <span>{t('step6.left', state.lang)}</span>
           <span>{t('step6.right', state.lang)}</span>
         </div>

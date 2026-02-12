@@ -8,6 +8,7 @@ import { scoreStep } from '@/lib/scoring';
 export function StepPhrase() {
   const { state, dispatch } = useQuiz();
   const [value, setValue] = useState('');
+  const isTerminal = state.theme === 'terminal';
 
   const submit = () => {
     const score = scoreStep(4, value);
@@ -23,7 +24,9 @@ export function StepPhrase() {
 
       <div className="w-full">
         <div className="flex items-baseline gap-2">
-          <span className="text-[--terminal-dim] text-sm select-none">&gt;</span>
+          {isTerminal && (
+            <span className="text-[--muted] text-sm select-none">&gt;</span>
+          )}
           <input
             type="text"
             value={value}
@@ -39,7 +42,7 @@ export function StepPhrase() {
 
       <button onClick={submit} className="quiz-btn">
         {t('step5.submit', state.lang)}
-        <span className="ml-2 text-[--terminal-dim]">↵</span>
+        <span className="ml-2 text-[--muted]">↵</span>
       </button>
     </div>
   );

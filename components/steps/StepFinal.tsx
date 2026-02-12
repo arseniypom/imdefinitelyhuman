@@ -12,6 +12,7 @@ const OPTIONS = [
 
 export function StepFinal() {
   const { state, dispatch } = useQuiz();
+  const isTerminal = state.theme === 'terminal';
 
   const handleAnswer = (value: string) => {
     const score = scoreStep(9, value);
@@ -22,8 +23,10 @@ export function StepFinal() {
   return (
     <div className="flex w-full max-w-lg flex-col items-center gap-10">
       <div className="text-center">
-        <div className="mb-3 text-xs tracking-[0.3em] text-[--terminal-dim] uppercase">
-          {'// final_check'}
+        <div className={`mb-3 text-xs text-[--muted] ${
+          isTerminal ? 'tracking-[0.3em] uppercase' : 'tracking-[0.15em] light-serif'
+        }`}>
+          {isTerminal ? '// final_check' : 'last one'}
         </div>
         <h2 className="text-xl leading-relaxed sm:text-2xl">
           {t('step10.question', state.lang)}
