@@ -73,14 +73,17 @@ h2 {
   font-family: var(--font-display), Georgia, "Times New Roman", serif;
   font-style: italic;
   font-weight: 400;
-  letter-spacing: -0.01em;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+  text-wrap: balance;
 }
 
 [data-theme="terminal"] h2 {
   font-family: var(--font-mono), "Courier New", monospace;
   font-style: normal;
   font-weight: inherit;
-  letter-spacing: inherit;
+  letter-spacing: -0.01em;
+  text-transform: lowercase;
 }
 
 /* ── Keyframes ── */

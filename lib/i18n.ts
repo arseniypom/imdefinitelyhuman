@@ -17,8 +17,16 @@ const dict: Record<string, Record<Lang, string>> = {
 
   // ── Step 2: Dashes ──
   'step2.question': {
-    en: 'Place the correct punctuation:\n"Moscow _ the capital of Russia"',
-    ru: 'Расставь знаки препинания:\n«Москва _ столица России»',
+    en: 'How would you type this phrase:',
+    ru: 'Как бы ты написал эту фразу:',
+  },
+  'step2.human': {
+    en: 'This is the key, consistency beats intensity.',
+    ru: 'Вот в чём суть, постоянство побеждает интенсивность.',
+  },
+  'step2.ai': {
+    en: 'This is the key\u2014consistency beats intensity.',
+    ru: 'Вот в чём суть\u2014постоянство побеждает интенсивность.',
   },
 
   // ── Step 3: Response ──
@@ -49,40 +57,44 @@ const dict: Record<string, Record<Lang, string>> = {
     ru: 'Сколько букв R в слове "strawberry"?',
   },
   'step4.why': {
-    en: 'Why would I count?',
-    ru: 'А зачем считать?',
+    en: 'I don\'t want to count',
+    ru: 'Мне лень считать',
   },
 
-  // ── Step 5: Phrase ──
+  // ── Step 5: Reply Time ──
   'step5.question': {
-    en: 'Complete the phrase:\n"As a language model, I..."',
-    ru: 'Заверши фразу:\n«Как языковая модель, я...»',
+    en: 'You got a message. When will you reply?',
+    ru: 'Тебе пришло сообщение. Когда ответишь?',
   },
-  'step5.placeholder': {
-    en: 'Type anything...',
-    ru: 'Напиши что угодно...',
+  'step5.instantly': {
+    en: 'Instantly',
+    ru: 'Сразу',
   },
-  'step5.submit': {
-    en: 'Submit',
-    ru: 'Отправить',
+  'step5.hour': {
+    en: 'In an hour',
+    ru: 'Через часик',
+  },
+  'step5.tomorrow': {
+    en: 'Tomorrow... probably',
+    ru: 'Завтра... наверное',
   },
 
   // ── Step 6: GPU ──
   'step6.question': {
-    en: 'How much do you need a GPU?',
-    ru: 'Насколько тебе нужен GPU?',
+    en: 'Do you LOVE GPUs?',
+    ru: 'Ты ЛЮБИШЬ GPU?',
   },
   'step6.left': {
-    en: "Don't know what that is",
-    ru: 'Не знаю что это',
+    en: "What's a GPU?",
+    ru: 'А что это?',
   },
   'step6.right': {
-    en: 'VRAM IS LIFE',
-    ru: 'VRAM IS LIFE',
+    en: 'I dream in CUDA cores',
+    ru: 'Мне снятся CUDA-ядра',
   },
   'step6.confirm': {
-    en: 'Confirm',
-    ru: 'Подтвердить',
+    en: 'Lock in',
+    ru: 'Зафиксировать',
   },
 
   // ── Step 7: 3AM ──
@@ -127,12 +139,12 @@ const dict: Record<string, Record<Lang, string>> = {
     ru: 'Выбери свою temperature',
   },
   'step9.left': {
-    en: 'Deterministic 🤖',
-    ru: 'Детерминированный 🤖',
+    en: 'Deterministic',
+    ru: 'Детерминированный',
   },
   'step9.right': {
-    en: 'Chaotic 🔥',
-    ru: 'Хаотичный 🔥',
+    en: 'Chaotic',
+    ru: 'Хаотичный',
   },
   'step9.confirm': {
     en: 'Confirm',
@@ -141,8 +153,8 @@ const dict: Record<string, Record<Lang, string>> = {
 
   // ── Step 10: Final ──
   'step10.question': {
-    en: 'Final question. Are you an AI?',
-    ru: 'Последний вопрос. Ты — AI?',
+    en: 'Final question. Are you an AI? (be honest)',
+    ru: 'Последний вопрос. Ты — AI? (честно)',
   },
   'step10.no': {
     en: 'No',
@@ -179,26 +191,17 @@ const dict: Record<string, Record<Lang, string>> = {
     ru: 'Скорее человек, но кто знает',
   },
   'result.tier4': {
+    en: 'Almost human. Or is AI just getting better?',
+    ru: 'Почти человек. Или AI уже настолько хорош?',
+  },
+  'result.tier5': {
     en: 'Verified. 100% organic',
     ru: 'Верифицирован. 100% органика',
   },
-  'result.share_text': {
-    en: "I scored {score}% human on the 'Are You Human?' quiz! 🤖 https://imdefinitelyhuman.vercel.app",
-    ru: "Мой результат: {score}% человек в опроснике «Ты человек?» 🤖 https://imdefinitelyhuman.vercel.app",
-  },
-
   // ── UI ──
-  'ui.share': {
-    en: 'Copy result',
-    ru: 'Скопировать',
-  },
   'ui.restart': {
-    en: 'Take again',
+    en: 'Try again',
     ru: 'Пройти снова',
-  },
-  'ui.copied': {
-    en: 'Copied!',
-    ru: 'Скопировано!',
   },
 };
 

@@ -15,22 +15,22 @@ export function StepDashes() {
 
   return (
     <div className="flex w-full max-w-lg flex-col items-center gap-10">
-      <h2 className="whitespace-pre-line text-center text-xl leading-relaxed sm:text-2xl">
+      <h2 className="whitespace-pre-line text-center text-2xl sm:text-4xl">
         {t('step2.question', state.lang)}
       </h2>
 
-      <div className="flex gap-5">
+      <div className="flex w-full flex-col gap-4">
         <button
-          onClick={() => handleAnswer('-')}
-          className="quiz-btn text-2xl px-10 py-5 animate-fadeSlideUp opacity-0 [animation-fill-mode:forwards] stagger-1"
+          onClick={() => handleAnswer('human')}
+          className="quiz-btn text-base sm:text-lg px-6 py-4 text-left animate-fadeSlideUp opacity-0 [animation-fill-mode:forwards] stagger-1"
         >
-          -
+          {t('step2.human', state.lang)}
         </button>
         <button
-          onClick={() => handleAnswer('—')}
-          className="quiz-btn text-2xl px-10 py-5 animate-fadeSlideUp opacity-0 [animation-fill-mode:forwards] stagger-2"
+          onClick={() => handleAnswer('ai')}
+          className="quiz-btn text-base sm:text-lg px-6 py-4 text-left animate-fadeSlideUp opacity-0 [animation-fill-mode:forwards] stagger-2"
         >
-          —
+          {t('step2.ai', state.lang)}
         </button>
       </div>
     </div>

@@ -25,7 +25,7 @@ export function StepName() {
         }`}>
           {isTerminal ? '// initialization' : 'begin'}
         </div>
-        <h2 className="text-xl leading-relaxed sm:text-2xl">
+        <h2 className="text-2xl sm:text-4xl">
           {t('step1.question', state.lang)}
         </h2>
       </div>

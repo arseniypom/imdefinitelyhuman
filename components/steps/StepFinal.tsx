@@ -28,7 +28,7 @@ export function StepFinal() {
         }`}>
           {isTerminal ? '// final_check' : 'last one'}
         </div>
-        <h2 className="text-xl leading-relaxed sm:text-2xl">
+        <h2 className="text-2xl sm:text-4xl">
           {t('step10.question', state.lang)}
         </h2>
       </div>

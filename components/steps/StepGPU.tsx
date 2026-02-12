@@ -17,7 +17,7 @@ export function StepGPU() {
 
   return (
     <div className="flex w-full max-w-md flex-col items-center gap-10">
-      <h2 className="text-center text-xl leading-relaxed sm:text-2xl">
+      <h2 className="text-center text-2xl sm:text-4xl">
         {t('step6.question', state.lang)}
       </h2>
 

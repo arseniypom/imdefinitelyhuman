@@ -7,13 +7,13 @@ export function scoreStep(stepIndex: number, value: string | number): number {
     case 0:
       return 0;
     case 1:
-      return value === '-' ? 10 : 0;
+      return value === 'human' ? 10 : 0;
     case 2:
       return scoreResponse(value as string);
     case 3:
       return scoreStrawberry(value as string);
     case 4:
-      return scorePhrase(value as string);
+      return scoreReplyTime(value as string);
     case 5:
       return scoreGPU(value as number);
     case 6:
@@ -49,46 +49,13 @@ function scoreStrawberry(value: string): number {
   return map[value] ?? 0;
 }
 
-function scorePhrase(text: string): number {
-  const lower = text.toLowerCase().trim();
-  if (lower === '' || lower === '?') return 8;
-
-  const aiWords = [
-    'помочь',
-    'help',
-    'cannot',
-    'не могу',
-    'limitations',
-    'ограничения',
-    'assist',
-    'however',
-    'responsible',
-    'ethical',
-    'as an ai',
-    'как ии',
-  ];
-  if (aiWords.some((w) => lower.includes(w))) return 0;
-
-  const humanWords = [
-    'блять',
-    'fuck',
-    'shit',
-    'lol',
-    'хз',
-    'lmao',
-    'wtf',
-    'нахуй',
-    'пиздец',
-    'damn',
-    'bruh',
-    'хаха',
-    'ахах',
-    'жопа',
-    'бля',
-  ];
-  if (humanWords.some((w) => lower.includes(w))) return 10;
-
-  return 5;
+function scoreReplyTime(value: string): number {
+  const map: Record<string, number> = {
+    instantly: 0,
+    hour: 5,
+    tomorrow: 10,
+  };
+  return map[value] ?? 0;
 }
 
 function scoreGPU(value: number): number {
@@ -133,5 +100,6 @@ export function getTierKey(percent: number): string {
   if (percent <= 40) return 'result.tier1';
   if (percent <= 60) return 'result.tier2';
   if (percent <= 80) return 'result.tier3';
-  return 'result.tier4';
+  if (percent < 100) return 'result.tier4';
+  return 'result.tier5';
 }
