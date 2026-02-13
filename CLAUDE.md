@@ -2,50 +2,65 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
+## Project Overview
+
+"imdefinitelyhuman" is a 10-question quiz web app that scores how "human" you are (vs AI) as a percentage. Live at https://imdefinitelyhuman.com.
+
 ## Commands
 
 ```bash
-npm run dev      # Start dev server at localhost:3000
+npm run dev      # Dev server at localhost:3000
 npm run build    # Production build
-npm run start    # Start production server
-npm run lint     # Run ESLint
+npm run lint     # ESLint
+npm start        # Serve production build
 ```
 
 No test framework is configured.
 
+## Tech Stack
+
+- **Next.js 16** (App Router) with **React 19** and **TypeScript 5**
+- **Tailwind CSS 4** via `@tailwindcss/postcss`
+- **shadcn/ui** (new-york style, RSC enabled) — components in `components/ui/`
+- **PostHog** for analytics (env vars in `.env.local`)
+- **canvas-confetti** for 100% score celebration
+- Path alias: `@/*` → project root
+
 ## Architecture
 
-This is a single-page Next.js 16 (App Router) quiz app that scores users on how "human" they are vs AI. It supports two languages (EN/RU) and two visual themes (light/terminal).
+### Routing
 
-### State Flow
+Two routes via App Router:
+- `/` → `app/page.tsx` → `LandingPage` component
+- `/quiz` → `app/quiz/page.tsx` → `QuizShell` component
 
-`QuizProvider` (React Context + `useReducer`) in `lib/quiz-context.tsx` owns all global state. Every component accesses it via the `useQuiz()` hook. State auto-persists to `localStorage` via `lib/storage.ts` (key: `imdefhuman_quiz`). Theme is stored separately (key: `imdefhuman_theme`).
+### State Management
 
-### Quiz Pipeline
+`lib/quiz-context.tsx` — React Context + `useReducer`. Single `QuizState` object holds current step, all answers, language, theme, and transition state. Actions: `SET_LANG`, `SET_THEME`, `ANSWER_STEP`, `NEXT_STEP`, `RESTART`, `RESTORE`, `SET_TRANSITIONING`.
 
-`QuizShell` → conditionally renders one of 10 step components (`components/steps/Step*.tsx`) or `ResultScreen` based on `state.currentStep`. Each step calls `dispatch({ type: 'ANSWER_STEP', ... })` to record its answer, then the shell auto-advances. `StepTransition` wraps each step with fade/slide animations.
+State is persisted to localStorage (`lib/storage.ts`) under keys prefixed `imdefhuman_`.
 
-### Scoring
+### Quiz Flow
 
-`lib/scoring.ts` — each step (1–9) yields 0–10 "human points". Step 0 (name) is unscored. Max total = 90. Final percentage = `(total / 90) × 100`. Result tiers in `lib/i18n.ts`.
+1. **Steps 0–9**: Each step is a separate component in `components/steps/` (StepName, StepDashes, StepResponse, etc.)
+2. **Step 0** (name) is unscored. Steps 1–9 each yield 0–10 points. Max = 90.
+3. **QuizShell** renders the current step based on `state.currentStep` and shows `ResultScreen` when step ≥ 10.
+4. **Scoring**: `lib/scoring.ts` — `scoreStep(index, value)` returns points per step. Final percentage = `round((total / 90) × 100)`.
 
-### i18n
+See `QUIZ_STEPS.md` for the complete scoring reference and result tier messages.
 
-Custom dictionary in `lib/i18n.ts`. Use `t(key, lang, vars?)` for translations. Language type: `'ru' | 'en'`.
+### Internationalization
+
+`lib/i18n.ts` — flat dictionary with `{ key: { en, ru, es } }` entries. Helper `t(key, lang)` for lookups. Three languages: English, Russian, Spanish.
 
 ### Theming
 
-Two themes defined via CSS custom properties in `app/globals.css`:
-- **light** — warm analog (paper texture, serif headings, bouncy animations)
-- **terminal** — green CRT (scanlines, monospace, glitch animations)
+Two themes: **light** (warm analog) and **terminal** (retro green scanlines/glow). CSS variables defined in `app/globals.css`. A flash-prevention script in `app/layout.tsx` reads localStorage before React hydration.
 
-Theme set on `document.documentElement.dataset.theme`. A blocking `<script>` in `layout.tsx` prevents flash of wrong theme.
+### Analytics
 
-## Key Conventions
+PostHog tracks `step_completed` (step index + value) and `quiz_completed` (percentage + completion count). Initialized in `instrumentation-client.ts`.
 
-- All components are client components (`'use client'`)
-- Path alias: `@/*` maps to project root
-- Tailwind CSS v4 (configured in CSS via `@theme inline`, no `tailwind.config.js`)
-- Step components are named `Step{Name}.tsx` and live in `components/steps/`
-- Shared button/input styles: `.quiz-btn`, `.quiz-input` classes in `globals.css`
-- Stagger animations use `.stagger-1` through `.stagger-4` classes
+### Animations
+
+`StepTransition` component wraps step content for enter/exit animations. Custom keyframes (fadeSlideUp, glitch, flicker, revealPop, bounceSlideUp, warmReveal) defined in `globals.css`. Stagger delays via CSS utility classes.

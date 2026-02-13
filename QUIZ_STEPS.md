@@ -135,7 +135,7 @@ percentage  = Math.round((totalPoints / 90) * 100)
 
 | % Range | Message (EN) | Message (RU) |
 |---------|-------------|-------------|
-| 0–20 | "You're definitely GPT-4 in a trenchcoat" | "Ты точно GPT-4 в тренче" |
+| 0–20 | "You're definitely GPT-5.2 in a trenchcoat" | "Ты точно GPT-5.2 в тренче" |
 | 21–40 | "Suspicious... Take the captcha again" | "Подозрительно... Пройди капчу ещё раз" |
 | 41–60 | "Half human, half silicon" | "Полу-human, полу-silicon" |
 | 61–80 | "Probably human, but who knows" | "Скорее человек, но кто знает" |
