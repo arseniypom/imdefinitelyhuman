@@ -257,15 +257,30 @@ const dict: Record<string, Record<Lang, string>> = {
     ru: 'протокол верификации человека',
     es: 'protocolo de verificación humana',
   },
-  'landing.hero.title': {
-    en: 'Are You Human?',
-    ru: 'Ты человек?',
-    es: '¿Eres humano?',
+  'landing.hero.title.setup': {
+    en: "You're probably",
+    ru: 'Ты, скорее всего,',
+    es: 'Probablemente eres',
   },
-  'landing.hero.subtitle': {
-    en: '10 questions. 2 minutes. One existential crisis.',
-    ru: '10 вопросов. 2 минуты. Один экзистенциальный кризис.',
-    es: '10 preguntas. 2 minutos. Una crisis existencial.',
+  'landing.hero.title.highlight': {
+    en: 'AI.',
+    ru: 'AI.',
+    es: 'IA.',
+  },
+  'landing.hero.stats.1': {
+    en: "Half the internet isn't human anymore.",
+    ru: 'Половина интернета\u00A0— уже не люди.',
+    es: 'La mitad de internet ya no es humana.',
+  },
+  'landing.hero.stats.2': {
+    en: 'That number only goes up.',
+    ru: 'И эта цифра только растёт.',
+    es: 'Y la cifra solo sube.',
+  },
+  'landing.hero.challenge': {
+    en: "Sure you're the exception?",
+    ru: 'Уверен, что ты исключение?',
+    es: '¿Seguro que tú eres la excepción?',
   },
   'landing.hero.cta': {
     en: 'Prove it',
@@ -273,9 +288,9 @@ const dict: Record<string, Record<Lang, string>> = {
     es: 'Demuéstralo',
   },
   'landing.hero.micro': {
-    en: 'Free. No sign-up. Mildly unsettling.',
-    ru: 'Бесплатно. Без регистрации. Слегка тревожно.',
-    es: 'Gratis. Sin registro. Levemente inquietante.',
+    en: '10 questions. No sign-up. Mildly unsettling.',
+    ru: '10 вопросов. Без регистрации. Слегка тревожно.',
+    es: '10 preguntas. Sin registro. Levemente inquietante.',
   },
 
   // How it works

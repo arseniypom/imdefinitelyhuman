@@ -48,22 +48,53 @@ export function LandingPage() {
               : t('landing.hero.label', state.lang)}
           </div>
 
-          {/* Main headline */}
+          {/* Provocative statement */}
           <h1
-            className={`text-5xl sm:text-7xl md:text-8xl mb-6 ${
+            className={`text-5xl sm:text-6xl md:text-7xl font-extrabold mb-5 ${
               isTerminal ? '' : 'text-[--foreground]'
             }`}
           >
-            {t('landing.hero.title', state.lang)}
+            {t('landing.hero.title.setup', state.lang)}{' '}
+            <span
+              className="text-[1.15em]"
+              style={
+                isTerminal
+                  ? {
+                      color: 'var(--foreground)',
+                      textShadow:
+                        '0 0 20px var(--glow-strong), 0 0 40px var(--glow), 0 0 80px var(--glow)',
+                    }
+                  : {
+                      background:
+                        'linear-gradient(135deg, var(--accent) 0%, #E85D3A 40%, var(--accent-warm) 100%)',
+                      WebkitBackgroundClip: 'text',
+                      WebkitTextFillColor: 'transparent',
+                      backgroundClip: 'text',
+                    }
+              }
+            >
+              {t('landing.hero.title.highlight', state.lang)}
+            </span>
           </h1>
 
-          {/* Subtitle */}
+          {/* Supporting stats */}
           <p
-            className={`text-base sm:text-lg text-[--muted] mb-10 max-w-md mx-auto ${
+            className={`text-sm sm:text-base text-[--muted] mb-6 max-w-lg mx-auto leading-relaxed ${
+              isTerminal ? 'font-mono' : ''
+            }`}
+          >
+            {t('landing.hero.stats.1', state.lang)}
+              <br />
+              {t('landing.hero.stats.2', state.lang)}
+          </p>
+
+          {/* Challenge */}
+          <p
+            className={`text-lg sm:text-xl mb-2 ${
               isTerminal ? 'font-mono' : 'light-serif'
             }`}
           >
-            {t('landing.hero.subtitle', state.lang)}
+            {t('landing.hero.challenge', state.lang)}
           </p>
 
           {/* CTA */}

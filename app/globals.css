@@ -622,6 +622,41 @@ input[type="range"]::-moz-range-thumb {
   border-radius: 0;
 }
 
+/* ── Hero "AI" highlight ── */
+.hero-highlight-light {
+  background: linear-gradient(135deg, var(--accent) 0%, #E85D3A 40%, var(--accent-warm) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.hero-highlight-terminal {
+  color: var(--foreground);
+  text-shadow:
+    0 0 20px var(--glow-strong),
+    0 0 40px var(--glow),
+    0 0 80px var(--glow);
+  animation: heroGlitch 3s ease-in-out infinite;
+}
+
+@keyframes heroGlitch {
+  0%, 100% {
+    text-shadow: 0 0 20px var(--glow-strong), 0 0 40px var(--glow), 0 0 80px var(--glow),
+      3px 0 #00ff41, -3px 0 #ff0040;
+  }
+  15%, 17%, 52%, 100% {
+    text-shadow: 0 0 20px var(--glow-strong), 0 0 40px var(--glow), 0 0 80px var(--glow);
+  }
+  16% {
+    text-shadow: 0 0 20px var(--glow-strong), 0 0 40px var(--glow), 0 0 80px var(--glow),
+      -4px 0 #00ff41, 4px 0 #ff0040;
+  }
+  51% {
+    text-shadow: 0 0 20px var(--glow-strong), 0 0 40px var(--glow), 0 0 80px var(--glow),
+      2px 2px #00ff41, -2px -2px #ff0040;
+  }
+}
+
 /* ── Editorial serif italic utility ── */
 .light-serif {
   font-family: var(--font-display), Georgia, serif;
