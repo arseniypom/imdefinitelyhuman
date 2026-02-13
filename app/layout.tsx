@@ -31,32 +31,24 @@ export const metadata: Metadata = {
     default: "Are You Human?",
     template: "%s | Are You Human?",
   },
-  description: "A fun quiz that determines how human you are (vs AI) — expressed as a percentage.",
+  description: "10 questions stand between you and proof you're not a language model in a skinsuit.",
   icons: {
     icon: [
       { url: "/favicon-32x32.png", sizes: "32x32", type: "image/png" },
       { url: "/favicon-16x16.png", sizes: "16x16", type: "image/png" },
     ],
+    apple: [{ url: "/apple-touch-icon.png", sizes: "180x180" }],
   },
   manifest: "/site.webmanifest",
   openGraph: {
     title: "Are You Human?",
     description: "Take this quiz to find out if you're a real human or just GPT in a trenchcoat.",
     type: "website",
-    images: [
-      {
-        url: "/android-chrome-512x512.png",
-        width: 512,
-        height: 512,
-        alt: "imdefinitelyhuman",
-      },
-    ],
   },
   twitter: {
-    card: "summary",
+    card: "summary_large_image",
     title: "Are You Human?",
     description: "Take this quiz to find out if you're a real human or just GPT in a trenchcoat.",
-    images: ["/android-chrome-512x512.png"],
   },
 };
 

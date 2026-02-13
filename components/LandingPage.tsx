@@ -28,7 +28,7 @@ export function LandingPage() {
       }`}
     >
       {/* Top bar */}
-      <div className="fixed top-4 left-4 right-4 z-50 flex items-center justify-between">
+      <header className="fixed top-4 left-4 right-4 z-50 flex items-center justify-between">
         <Link
           href="/"
           className={`text-xs text-[--muted] no-underline select-none ${
@@ -37,12 +37,13 @@ export function LandingPage() {
         >
           imdefinitelyhuman
         </Link>
-        <div className="flex items-center gap-2">
+        <nav className="flex items-center gap-2">
           <ThemeToggle />
           <LanguageSwitcher />
-        </div>
-      </div>
+        </nav>
+      </header>
 
+      <main>
       {/* ─── Hero ─── */}
       <section className="flex min-h-dvh flex-col items-center justify-center px-6 text-center">
         <div className="max-w-2xl">
@@ -254,27 +255,28 @@ export function LandingPage() {
             <span className="ml-2 text-[--muted]">&rarr;</span>
           </Link>
         </div>
+      </section>
+      </main>
 
-        {/* Branding footer */}
-        <div className="mt-20">
-          {isTerminal ? (
-            <pre className="text-[10px] text-[--muted] opacity-30 leading-tight select-none">
+      {/* Branding footer */}
+      <footer className="px-6 pb-8 text-center">
+        {isTerminal ? (
+          <pre className="text-[10px] text-[--muted] opacity-30 leading-tight select-none">
 {`  ╔══════════════════════╗
   ║  HUMAN VERIFICATION  ║
   ║     PROTOCOL v0.1    ║
   ╚══════════════════════╝`}
-            </pre>
-          ) : (
-            <div className="flex items-center justify-center gap-3 select-none opacity-30">
-              <div className="w-6 h-px bg-[--muted]" />
-              <span className="text-[10px] text-[--muted] tracking-[0.2em] light-serif">
-                imdefinitelyhuman
-              </span>
-              <div className="w-6 h-px bg-[--muted]" />
-            </div>
-          )}
-        </div>
-      </section>
+          </pre>
+        ) : (
+          <div className="flex items-center justify-center gap-3 select-none opacity-30">
+            <div className="w-6 h-px bg-[--muted]" />
+            <span className="text-[10px] text-[--muted] tracking-[0.2em] light-serif">
+              imdefinitelyhuman
+            </span>
+            <div className="w-6 h-px bg-[--muted]" />
+          </div>
+        )}
+      </footer>
     </div>
   );
 }
