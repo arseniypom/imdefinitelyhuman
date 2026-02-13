@@ -1,5 +1,6 @@
 'use client';
 
+import Link from 'next/link';
 import { useQuiz } from '@/lib/quiz-context';
 import { StepTransition } from './StepTransition';
 import { LanguageSwitcher } from './LanguageSwitcher';
@@ -44,19 +45,30 @@ export function QuizShell() {
           : 'paper-texture'
       }`}
     >
-      <div className="fixed top-4 right-4 z-50 flex items-center gap-2">
-        <ThemeToggle />
-        <LanguageSwitcher />
+      {/* Top bar */}
+      <div className="fixed top-4 left-4 right-4 z-50 flex items-center justify-between">
+        <Link
+          href="/"
+          className={`text-xs text-[--muted] no-underline select-none ${
+            isTerminal ? 'tracking-[0.2em] font-mono' : 'tracking-[0.15em]'
+          }`}
+        >
+          imdefinitelyhuman
+        </Link>
+        <div className="flex items-center gap-2">
+          <ThemeToggle />
+          <LanguageSwitcher />
+        </div>
       </div>
 
       {/* Step counter */}
       {!isResult && (
         isTerminal ? (
-          <div className="fixed top-4 left-4 z-50 text-xs text-[--muted] tracking-widest font-mono">
+          <div className="fixed top-10 left-4 z-50 text-xs text-[--muted] tracking-widest font-mono">
             {String(state.currentStep + 1).padStart(2, '0')}/10
           </div>
         ) : (
-          <div className="fixed top-4 left-4 z-50 flex items-center gap-1.5">
+          <div className="fixed top-10 left-4 z-50 flex items-center gap-1.5">
             {Array.from({ length: 10 }, (_, i) => (
               <div
                 key={i}

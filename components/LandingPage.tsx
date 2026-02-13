@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import posthog from 'posthog-js';
 import { useQuiz } from '@/lib/quiz-context';
 import { t } from '@/lib/i18n';
 import { ThemeToggle } from './ThemeToggle';
@@ -26,10 +27,20 @@ export function LandingPage() {
           : 'paper-texture'
       }`}
     >
-      {/* Theme / Language controls */}
-      <div className="fixed top-4 right-4 z-50 flex items-center gap-2">
-        <ThemeToggle />
-        <LanguageSwitcher />
+      {/* Top bar */}
+      <div className="fixed top-4 left-4 right-4 z-50 flex items-center justify-between">
+        <Link
+          href="/"
+          className={`text-xs text-[--muted] no-underline select-none ${
+            isTerminal ? 'tracking-[0.2em] font-mono' : 'tracking-[0.15em]'
+          }`}
+        >
+          imdefinitelyhuman
+        </Link>
+        <div className="flex items-center gap-2">
+          <ThemeToggle />
+          <LanguageSwitcher />
+        </div>
       </div>
 
       {/* ─── Hero ─── */}
@@ -98,7 +109,7 @@ export function LandingPage() {
           </p>
 
           {/* CTA */}
-          <Link href="/quiz" className="quiz-btn inline-block text-base px-8 py-3.5">
+          <Link href="/quiz" className="quiz-btn inline-block text-base px-8 py-3.5" onClick={() => posthog.capture('landing_cta_clicked', { location: 'hero' })}>
             {t('landing.hero.cta', state.lang)}
             <span className="ml-2 text-[--muted]">&rarr;</span>
           </Link>
@@ -192,7 +203,7 @@ export function LandingPage() {
             {Array.from({ length: FAQ_COUNT }, (_, i) => {
               const n = i + 1;
               return (
-                <details key={n} className="group">
+                <details key={n} className="group" onToggle={(e) => { if ((e.target as HTMLDetailsElement).open) posthog.capture('landing_faq_opened', { question: n }); }}>
                   <summary
                     className={`flex w-full items-center justify-between py-5 text-left ${
                       isTerminal ? 'font-mono' : ''
@@ -238,7 +249,7 @@ export function LandingPage() {
             {t('landing.footer.title', state.lang)}
           </h2>
 
-          <Link href="/quiz" className="quiz-btn inline-block text-base px-8 py-3.5">
+          <Link href="/quiz" className="quiz-btn inline-block text-base px-8 py-3.5" onClick={() => posthog.capture('landing_cta_clicked', { location: 'footer' })}>
             {t('landing.footer.cta', state.lang)}
             <span className="ml-2 text-[--muted]">&rarr;</span>
           </Link>
