@@ -136,7 +136,7 @@ body {
 }
 
 /* Editorial italic serif headings (default) */
-h2 {
+h1, h2 {
   font-family: var(--font-display), Georgia, "Times New Roman", serif;
   font-style: italic;
   font-weight: 400;
@@ -145,12 +145,36 @@ h2 {
   text-wrap: balance;
 }
 
+h1 {
+  letter-spacing: -0.03em;
+  line-height: 1.05;
+}
+
+[data-theme="terminal"] h1,
 [data-theme="terminal"] h2 {
   font-family: var(--font-mono), "Courier New", monospace;
   font-style: normal;
   font-weight: inherit;
   letter-spacing: -0.01em;
   text-transform: lowercase;
+}
+
+/* ── FAQ Accordion ── */
+details summary {
+  cursor: pointer;
+  list-style: none;
+}
+
+details summary::-webkit-details-marker {
+  display: none;
+}
+
+details[open] summary .faq-chevron {
+  transform: rotate(180deg);
+}
+
+.faq-chevron {
+  transition: transform 0.2s ease;
 }
 
 /* ── Keyframes ── */

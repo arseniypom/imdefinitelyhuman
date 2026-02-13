@@ -26,7 +26,11 @@ const dmSans = DM_Sans({
 });
 
 export const metadata: Metadata = {
-  title: "Are You Human?",
+  metadataBase: new URL("https://imdefinitelyhuman.com"),
+  title: {
+    default: "Are You Human?",
+    template: "%s | Are You Human?",
+  },
   description: "A fun quiz that determines how human you are (vs AI) — expressed as a percentage.",
   icons: {
     icon: [
