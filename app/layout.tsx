@@ -43,6 +43,20 @@ export const metadata: Metadata = {
     title: "Are You Human?",
     description: "Take this quiz to find out if you're a real human or just GPT in a trenchcoat.",
     type: "website",
+    images: [
+      {
+        url: "/android-chrome-512x512.png",
+        width: 512,
+        height: 512,
+        alt: "imdefinitelyhuman",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary",
+    title: "Are You Human?",
+    description: "Take this quiz to find out if you're a real human or just GPT in a trenchcoat.",
+    images: ["/android-chrome-512x512.png"],
   },
 };
 
